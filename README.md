@@ -14,3 +14,4 @@ Form based approaches:
 - `java-form`- How to create a Java-only form.
 - `login-component-form` - How to use the free login form component.
 - `login-overlay-form` - How to use the free login dialog component.
+- `form-less` - How to login without submitting a form and reloads.
