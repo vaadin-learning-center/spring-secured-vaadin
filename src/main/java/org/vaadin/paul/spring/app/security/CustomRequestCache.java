@@ -1,5 +1,8 @@
 package org.vaadin.paul.spring.app.security;
 
+import com.vaadin.flow.server.VaadinServletRequest;
+import com.vaadin.flow.server.VaadinServletResponse;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * HttpSessionRequestCache that avoids saving internal framework requests.
  */
-class CustomRequestCache extends HttpSessionRequestCache {
+public class CustomRequestCache extends HttpSessionRequestCache {
 	/**
 	 * {@inheritDoc}
 	 *
@@ -22,6 +25,10 @@ class CustomRequestCache extends HttpSessionRequestCache {
 		if (!SecurityUtils.isFrameworkInternalRequest(request)) {
 			super.saveRequest(request, response);
 		}
+	}
+
+	public DefaultSavedRequest getSavedRequest() {
+		return (DefaultSavedRequest)getRequest(VaadinServletRequest.getCurrent().getHttpServletRequest(), VaadinServletResponse.getCurrent().getHttpServletResponse());
 	}
 
 }
