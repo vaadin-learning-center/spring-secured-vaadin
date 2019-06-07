@@ -1,23 +1,16 @@
-# Project Base for Vaadin Flow and Spring Boot
+# Example code for a Spring secured Vaadin web application
+This project is based on the the Vaadin Spring starter (https://vaadin.com/start). You can find the corresponding tutorial at https://vaadin.com/tutorials/securing-your-app-with-spring-security
 
-This project can be used as a starting point to create your own Vaadin Flow application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+Import the project to the IDE of your choosing as a Maven project.
 
-The best way to use it by via [vaadin.com/start](https://vaadin.com/start) - you can get only the necessary parts and choose the package naming you want to use.
-
-Import the project to the IDE of your choosing as a Maven project. 
-
-Run application using `mvn spring-boot:run` or directly running Application class from your IDE.
+Run application using mvn spring-boot:run or directly running Application class from your IDE.
 
 Open http://localhost:8080/ in browser
 
+The `master` branch contains the general Spring Security configuration and for each specialized implementation we have created a dedicated branch.
 
-For documentation on using Vaadin Flow and Spring, visit [vaadin.com/docs](https://vaadin.com/docs/v10/flow/spring/tutorial-spring-basic.html)
-
-For more information on Vaadin Flow, visit https://vaadin.com/flow.
-
-Branching information:
-* `master` the latest version of the starter, using the latest platform snapshot
-* `V10` the version for Vaadin 10
-* `V11` the version for Vaadin 11
-* `V12` the version for Vaadin 12
+Form based approaches:
+- `polymer-form` - How to create a custom Polymer based form.
+- `java-form`- How to create a Java-only form.
+- `login-component-form` - How to use the free login form component.
+- `login-overlay-form` - How to use the free login dialog component.
