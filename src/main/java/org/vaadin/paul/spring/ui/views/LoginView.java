@@ -6,14 +6,12 @@ import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.VaadinRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.vaadin.paul.spring.app.security.CustomRequestCache;
 
 @Tag("sa-login-view")
@@ -36,7 +34,7 @@ public class LoginView extends VerticalLayout {
 
 		login.addLoginListener(e -> {
 			try {
-				// try to authenticate with given credentials
+				// try to authenticate with given credentials, should always return !null or throw an {@link AuthenticationException}
 				final Authentication authentication = authenticationManager
 						.authenticate(new UsernamePasswordAuthenticationToken(e.getUsername(), e.getPassword()));
 
@@ -44,31 +42,15 @@ public class LoginView extends VerticalLayout {
 				if(authentication != null ) {
 					login.close();
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-					UI.getCurrent().navigate(resolveRedirectUrl(requestCache));
+					UI.getCurrent().navigate(requestCache.resolveRedirectUrl());
 				}
 
 			} catch (AuthenticationException ex) {
-				// something went wrong
+				// show default error message
+				// Note: You should not expose any detailed information here like "username is known but password is wrong"
+				// as it weakens security.
 				login.setError(true);
 			}
 		});
-	}
-
-	/**
-	 * Uses the custom request cache to resolve the correct redirect URL.
-	 *
-	 * @param requestCache
-	 * @return
-	 */
-	private String resolveRedirectUrl(CustomRequestCache requestCache) {
-		final DefaultSavedRequest savedRequest = requestCache.getSavedRequest();
-		if(savedRequest != null) {
-			final String requestURI = savedRequest.getRequestURI();
-			if (requestURI != null && requestURI.length() > 0 && !requestURI.contains(ROUTE)) {
-				return requestURI.startsWith("/") ? requestURI.substring(1) : requestURI;
-			}
-		}
-
-		return "";
 	}
 }
