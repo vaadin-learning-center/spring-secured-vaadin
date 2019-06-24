@@ -3,6 +3,8 @@ package org.vaadin.paul.spring.ui.views;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -13,7 +15,8 @@ import com.vaadin.flow.router.Route;
 
 @Route(value = LoginView.ROUTE)
 @PageTitle("Login")
-@HtmlImport("frontend://bower_components/iron-form/iron-form.html")
+@NpmPackage(value = "@polymer/iron-form", version = "3.0.1")
+@JsModule("@polymer/iron-form/iron-form.js")
 public class LoginView extends VerticalLayout {
 	public static final String ROUTE = "login";
 
@@ -24,7 +27,7 @@ public class LoginView extends VerticalLayout {
 		passwordField.getElement().setAttribute("name", "password");
 		Button submitButton = new Button("Login");
 		submitButton.setId("submitbutton");
-		UI.getCurrent().getPage().executeJavaScript("document.getElementById('submitbutton').addEventListener('click', () => document.getElementById('ironform').submit());");
+		UI.getCurrent().getPage().executeJs("document.getElementById('submitbutton').addEventListener('click', () => document.getElementById('ironform').submit());");
 
 		FormLayout formLayout = new FormLayout();
 		formLayout.add(userNameTextField, passwordField, submitButton);
