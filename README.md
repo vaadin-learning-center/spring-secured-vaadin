@@ -9,8 +9,11 @@ Open http://localhost:8080/ in browser
 
 The `master` branch contains the general Spring Security configuration and for each specialized implementation we have created a dedicated branch. All examples use Vaadin 14.
 
-Form based approaches:
+Form/POST based approaches:
 - `polymer-form` - How to create a custom Polymer based form.
 - `java-form`- How to create a Java-only form.
 - `login-component-form` - How to use the free login form component.
 - `login-overlay-form` - How to use the free login dialog component.
+
+Logging in without posting a form:
+- `form-less` - How to use the free login dialog and login without a page reload.
