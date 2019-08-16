@@ -7,7 +7,7 @@ Run application using mvn spring-boot:run or directly running Application class 
 
 Open http://localhost:8080/ in browser
 
-The `master` branch contains the general Spring Security configuration and for each specialized implementation we have created a dedicated branch.
+The `master` branch contains the general Spring Security configuration and for each specialized implementation we have created a dedicated branch. All examples use Vaadin 14.
 
 Form based approaches:
 - `polymer-form` - How to create a custom Polymer based form.
