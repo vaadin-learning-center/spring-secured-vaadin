@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.vaadin.paul.spring.ui.views.LoginView;
 
 /**
  * Configures spring security, doing the following:
@@ -22,10 +23,10 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	private static final String LOGIN_PROCESSING_URL = "/login";
-	private static final String LOGIN_FAILURE_URL = "/login";
-	private static final String LOGIN_URL = "/login";
-	private static final String LOGOUT_SUCCESS_URL = "/login";
+	private static final String LOGIN_PROCESSING_URL = "/" + LoginView.ROUTE;
+	private static final String LOGIN_FAILURE_URL = "/" + LoginView.ROUTE;
+	private static final String LOGIN_URL = "/" + LoginView.ROUTE;
+	private static final String LOGOUT_SUCCESS_URL = "/" + LoginView.ROUTE;
 
 	/**
 	 * Require login to access internal pages and configure login form.
@@ -59,13 +60,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	public UserDetailsService userDetailsService() {
-		UserDetails user =
+		// typical logged in user with some privileges
+		UserDetails normalUser =
 				User.withUsername("user")
 						.password("{noop}password")
-						.roles("USER")
+						.roles("User")
 						.build();
 
-		return new InMemoryUserDetailsManager(user);
+		// admin user with all privileges
+		UserDetails adminUser =
+				User.withUsername("admin")
+						.password("{noop}password")
+						.roles("User", "Admin")
+						.build();
+
+		// admin user with all privileges
+		UserDetails paulUser =
+				User.withUsername("paul")
+						.password("{noop}password")
+						.roles("User")
+						.build();
+
+		return new InMemoryUserDetailsManager(normalUser, adminUser, paulUser);
 	}
 
 	/**
