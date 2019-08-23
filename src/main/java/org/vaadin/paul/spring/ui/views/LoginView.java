@@ -14,7 +14,7 @@ public class LoginView extends VerticalLayout {
 
 	private LoginOverlay login = new LoginOverlay();
 
-	public LoginView(){
+	public LoginView() {
 		login.setAction("login");
 		login.setOpened(true);
 		login.setTitle("Spring Secured Vaadin");

@@ -2,11 +2,16 @@ package org.vaadin.paul.spring.app.security;
 
 import com.vaadin.flow.server.ServletHelper.RequestType;
 import com.vaadin.flow.shared.ApplicationConstants;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -39,10 +44,31 @@ public final class SecurityUtils {
 	 * Tests if some user is authenticated. As Spring Security always will create an {@link AnonymousAuthenticationToken}
 	 * we have to ignore those tokens explicitly.
 	 */
-	static boolean isUserLoggedIn() {
+	public static boolean isUserLoggedIn() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return authentication != null
 				&& !(authentication instanceof AnonymousAuthenticationToken)
 				&& authentication.isAuthenticated();
+	}
+
+	/**
+	 * Checks if access is granted for the current user for the given secured view,
+	 * defined by the view class.
+	 *
+	 * @param securedClass View class
+	 * @return true if access is granted, false otherwise.
+	 */
+	public static boolean isAccessGranted(Class<?> securedClass) {
+		// Allow if no roles are required.
+		Secured secured = AnnotationUtils.findAnnotation(securedClass, Secured.class);
+		if (secured == null) {
+			return true;
+		}
+
+		// lookup needed role in user roles
+		final List<String> allowedRoles = Arrays.asList(secured.value());
+		final Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
+		return userAuthentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+				.anyMatch(allowedRoles::contains);
 	}
 }
