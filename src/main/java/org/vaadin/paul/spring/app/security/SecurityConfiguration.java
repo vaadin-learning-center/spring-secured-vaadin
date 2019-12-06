@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.util.AntPathMatcher;
 
 /**
  * Configures spring security, doing the following:
@@ -45,6 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// Allow all flow internal requests.
 				.requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
 
+				// Vaadin Flow static resources
+				// Now, those requests are handled by Spring Security's filter chain which results in a fully initialized
+				// security context. This is used in the upload's success listener to do additional authentication checks for example.
+				.antMatchers("/VAADIN/**").permitAll()
+
 				// Allow all requests by logged in users.
 				.anyRequest().authenticated()
 
@@ -74,9 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
-				// Vaadin Flow static resources
-				"/VAADIN/**",
-
 				// the standard favicon URI
 				"/favicon.ico",
 
