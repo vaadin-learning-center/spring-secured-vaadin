@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.vaadin.paul.spring.app.security.CustomRequestCache;
 
@@ -42,9 +43,14 @@ public class LoginView extends VerticalLayout {
 				if(authentication != null ) {
 					login.close();
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-					UI.getCurrent().navigate(requestCache.resolveRedirectUrl());
-				}
 
+					//Access to view by role
+					if (authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(role -> role.equals("ROLE_Admin"))) {
+						UI.getCurrent().navigate(AdminView.class);
+					} else {
+						UI.getCurrent().navigate(requestCache.resolveRedirectUrl());
+					}
+				}
 			} catch (AuthenticationException ex) {
 				// show default error message
 				// Note: You should not expose any detailed information here like "username is known but password is wrong"
