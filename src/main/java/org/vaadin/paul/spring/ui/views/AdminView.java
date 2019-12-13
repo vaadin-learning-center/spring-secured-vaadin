@@ -6,7 +6,7 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.paul.spring.app.security.SecuredByRole;
 
-@Route
+@Route("admin")
 @SecuredByRole("ROLE_Admin")
 public class AdminView extends VerticalLayout {
     @Autowired
