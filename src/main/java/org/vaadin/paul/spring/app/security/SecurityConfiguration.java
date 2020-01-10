@@ -23,7 +23,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final String LOGIN_PROCESSING_URL = "/login";
-	private static final String LOGIN_FAILURE_URL = "/login";
+	private static final String LOGIN_FAILURE_URL = "/login?error";
 	private static final String LOGIN_URL = "/login";
 	private static final String LOGOUT_SUCCESS_URL = "/login";
 
@@ -72,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * Allows access to static resources, bypassing Spring security.
 	 */
 	@Override
-	public void configure(WebSecurity web) throws Exception {
+	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers(
 				// Vaadin Flow static resources
 				"/VAADIN/**",
