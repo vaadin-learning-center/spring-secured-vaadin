@@ -24,7 +24,7 @@ import org.vaadin.paul.spring.ui.views.LoginView;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final String LOGIN_PROCESSING_URL = "/" + LoginView.ROUTE;
-	private static final String LOGIN_FAILURE_URL = "/" + LoginView.ROUTE;
+	private static final String LOGIN_FAILURE_URL = "/login?error";
 	private static final String LOGIN_URL = "/" + LoginView.ROUTE;
 	private static final String LOGOUT_SUCCESS_URL = "/" + LoginView.ROUTE;
 
@@ -88,7 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * Allows access to static resources, bypassing Spring security.
 	 */
 	@Override
-	public void configure(WebSecurity web) throws Exception {
+	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers(
 				// Vaadin Flow static resources
 				"/VAADIN/**",
