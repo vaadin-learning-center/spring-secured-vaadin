@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final String LOGIN_PROCESSING_URL = "/login";
 	private static final String LOGIN_FAILURE_URL = "/login";
-	private static final String LOGIN_URL = "/login";
+	static final String LOGIN_URL = "/login";
 	private static final String LOGOUT_SUCCESS_URL = "/login";
 
 	/**

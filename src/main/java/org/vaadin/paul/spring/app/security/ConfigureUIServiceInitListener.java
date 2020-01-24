@@ -5,7 +5,6 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.VaadinServiceInitListener;
 import org.springframework.stereotype.Component;
-import org.vaadin.paul.spring.ui.views.LoginView;
 
 @Component
 public class ConfigureUIServiceInitListener implements VaadinServiceInitListener {
@@ -25,9 +24,8 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
 	 *            before navigation event with event details
 	 */
 	private void beforeEnter(BeforeEnterEvent event) {
-		if (!LoginView.class.equals(event.getNavigationTarget())
-		    && !SecurityUtils.isUserLoggedIn()) {
-			event.rerouteTo(LoginView.class);
+		if (!SecurityUtils.isUserLoggedIn()) {
+			UI.getCurrent().getPage().setLocation(SecurityConfiguration.LOGIN_URL);
 		}
 	}
 }
