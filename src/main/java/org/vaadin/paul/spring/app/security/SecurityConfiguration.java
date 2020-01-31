@@ -53,7 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.failureUrl(LOGIN_FAILURE_URL)
 
 				// Configure logout
-				.and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+				.and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL)
+
+				// Configure remember me cookie
+				.and().rememberMe().key("pssssst").alwaysRemember(true)
+		;
 	}
 
 	@Bean
