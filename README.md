@@ -14,6 +14,8 @@ Form/POST based approaches:
 - `java-form`- How to create a Java-only form.
 - `login-component-form` - How to use the free login form component.
 - `login-overlay-form` - How to use the free login dialog component.
+- `login-overlay-form-fine-access-control` - Extend the example for fine grained view access control
+- `login-overlay-form-ilay` - Using ILAY for fine grained view access control
 
 Logging in without posting a form:
 - `form-less` - How to use the free login dialog and login without a page reload.
