@@ -86,7 +86,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// web application manifest
 				"/manifest.webmanifest",
 				"/sw.js",
-				"/offline-page.html",
+				"/offline.html", // pwa default offline page
+				"/offline-page.html", // pwa offline page bakery example
 
 				// icons and images
 				"/icons/**",
